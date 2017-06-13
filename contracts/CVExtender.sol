@@ -1,4 +1,5 @@
 pragma solidity ^0.4.8;
+
 contract CVExtender {
     function getDescription() constant returns (string);
     function getTitle() constant returns (string);

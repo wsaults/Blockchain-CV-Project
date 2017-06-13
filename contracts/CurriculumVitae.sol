@@ -1,8 +1,8 @@
 pragma solidity ^0.4.8;
 
-import "CVExtender.sol";
+import "./CVExtender.sol";
 
-contract Example is CVExtender {
+contract CurriculumVitae is CVExtender {
     
     /**
      * Your functions go here
