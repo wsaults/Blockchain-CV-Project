@@ -41,7 +41,10 @@ window.App = {
       accounts = accs;
       account = accounts[0];
 
-      self.refreshBalance();
+      self.showInfo();
+      self.showTitle();
+      self.showDescription();
+      self.showTipAddress();
     });
 
     /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
@@ -50,47 +53,77 @@ window.App = {
       });
   },
 
-  setStatus: function(message) {
-    var status = document.getElementById("status");
-    status.innerHTML = message;
-  },
-
-  refreshBalance: function() {
+  showInfo: function() {
     var self = this;
 
-    var meta;
+    self.showAuthor();
+    self.showTitle();
+    self.showDescription();
+    self.showTipAddress();
+  },
+
+  showAuthor: function() {
+    var self = this;
+
+    var contract;
     CurriculumVitae.deployed().then(function(instance) {
-      meta = instance;
-      return meta.getBalance.call(account, {from: account});
+      contract = instance;
+      return contract.getAuthor.call();
     }).then(function(value) {
-      var balance_element = document.getElementById("balance");
-      balance_element.innerHTML = value.valueOf();
+      let [author, email] = value
+      document.getElementById("author").innerHTML = author;
+      document.getElementById("email").innerHTML = email;
     }).catch(function(e) {
       console.log(e);
-      self.setStatus("Error getting balance; see log.");
+      self.setStatus("Error getting author or email; see log.");
     });
   },
 
-  sendCoin: function() {
+  showTitle: function() {
     var self = this;
 
-    var amount = parseInt(document.getElementById("amount").value);
-    var receiver = document.getElementById("receiver").value;
-
-    this.setStatus("Initiating transaction... (please wait)");
-
-    var meta;
+    var contract;
     CurriculumVitae.deployed().then(function(instance) {
-      meta = instance;
-      return meta.sendCoin(receiver, amount, {from: account});
-    }).then(function() {
-      self.setStatus("Transaction complete!");
-      self.refreshBalance();
+      contract = instance;
+      return contract.getTitle.call();
+    }).then(function(value) {
+      document.getElementById("title").innerHTML = value;
     }).catch(function(e) {
       console.log(e);
-      self.setStatus("Error sending coin; see log.");
+      self.setStatus("Error getting title; see log.");
+    });
+  },
+
+  showDescription: function() {
+    var self = this;
+
+    var contract;
+    CurriculumVitae.deployed().then(function(instance) {
+      contract = instance;
+      return contract.getDescription.call();
+    }).then(function(value) {
+      document.getElementById("description").innerHTML = value;
+    }).catch(function(e) {
+      console.log(e);
+      self.setStatus("Error getting title; see log.");
+    });
+  },
+
+  showTipAddress: function() {
+    var self = this;
+
+    var contract;
+    CurriculumVitae.deployed().then(function(instance) {
+      contract = instance;
+      return contract.getTipAddress.call();
+    }).then(function(value) {
+      document.getElementById("tipAddress").innerHTML = value;
+    }).catch(function(e) {
+      console.log(e);
+      self.setStatus("Error getting tip address; see log.");
     });
   }
+
 };
 
 window.addEventListener('load', function() {

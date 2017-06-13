@@ -17,7 +17,7 @@ contract('CurriculumVitae', function(accounts) {
         var contractInstance;
         return CurriculumVitae.deployed().then(function(instance) {
             contractInstance = instance;
-            return contractInstance.setIdentity("Will Saults", "Developer", "Some guy learning Solidity", "http://example.com", "email@example.com");
+            return contractInstance.setIdentity("Will Saults", "Developer", "Some guy learning Solidity", "http://example.com", "email@example.com", "0x00000000000000000000000000000000deadbeef");
         }).then(function() {
             return contractInstance.getAuthor();
         }).then(function(results) {
@@ -31,11 +31,15 @@ contract('CurriculumVitae', function(accounts) {
         }).then(function() {
             return contractInstance.getDescription();
         }).then(function(results) {
-            assert.equal(results, "Some guy learning Solidity", "The descriptions are the same");
+            assert.equal(results, "Some guy learning Solidity", "The description is the same");
         }).then(function() {
             return contractInstance.getAddress();
         }).then(function(results) {
             assert.equal(results, "http://example.com", "The urls are the same");
+        }).then(function() {
+            return contractInstance.getTipAddress();
+        }).then(function(results) {
+            assert.equal(results, "0x00000000000000000000000000000000deadbeef", "The tip address is the same");
         });
     });
 });
