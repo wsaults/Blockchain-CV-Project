@@ -6,6 +6,10 @@ import "../contracts/CurriculumVitae.sol";
 
 contract TestCurriculumVitae {
 
+  function testIsTrue() {
+    Assert.isTrue(true, "Should be true");
+  }
+
   // function testInitialBalanceUsingDeployedContract() {
   //   MetaCoin meta = MetaCoin(DeployedAddresses.MetaCoin());
 
