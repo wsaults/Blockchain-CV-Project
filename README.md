@@ -1,3 +1,6 @@
+# What this is
+This repo contains the work done according to the Udemy blockchain developer course final project.
+
 # truffle-init-webpack
 Example webpack project with Truffle. Includes contracts, migrations, tests, user interface and webpack build pipeline.
 
