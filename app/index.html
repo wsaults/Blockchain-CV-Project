@@ -55,16 +55,15 @@
     <hr>
     <div class="row">
       <div class="col-lg-12">
-        <h1>Send WillCoin</h1>
+        <h1>Sign the guest book!</h1>
         <div class="input-group">
-          <span class="input-group-addon" id="amount">Amount</span>
-          <input type="text" class="form-control" placeholder="e.g., 95" aria-describedby="basic-addon1">
+          <span class="input-group-addon" id="signer">Address</span>
+          <input id="signerAddress" type="text" class="form-control" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae" aria-describedby="basic-addon1"></input>
         </div>
-        <div class="input-group">
-          <span class="input-group-addon" id="receiver">Receiver</span>
-          <input type="text" class="form-control" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae" aria-describedby="basic-addon1">
-        </div>
-        <button type="button" class="btn btn-default navbar-btn" id="send" onclick="App.sendCoin()">Send</button>
+        <button type="button" class="btn btn-default navbar-btn" id="send" onclick="App.signGuestBook()">Sign</button>
+      </div>
+      <div class="row">
+        <span id="addresses">addresses</span>
       </div>
     </div>
   </div>

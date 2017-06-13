@@ -4,6 +4,8 @@ import "./CVExtender.sol";
 import "./mortal.sol";
 
 contract CurriculumVitae is CVExtender, mortal {
+
+    event guestBookSigned(address indexed _signer);
     
     struct Identity {
         string _name;
@@ -15,6 +17,9 @@ contract CurriculumVitae is CVExtender, mortal {
     }
 
     Identity identity;
+
+    uint signatureCounter;
+    address[] public guestBookAddreses;
 
     function CurriculumVitae() {
         setIdentity("Will Saults", "Developer", "A guy learning Solidity", "http://saults.herokuapp.com", "wpsaults@gmail.com", "0x178Bc6a8ffF5DF6E8B1A358b0BC37647Dc02E57D");
@@ -45,5 +50,12 @@ contract CurriculumVitae is CVExtender, mortal {
 
     function getTipAddress() constant returns(address) {
         return identity._tipAddress; 
+    }
+
+    function signGuestBook(address signerAddress) returns(bool sufficient) {
+        signatureCounter++;
+        guestBookAddreses[signatureCounter] = signerAddress;
+        guestBookSigned(signerAddress);
+        return true;
     }
 }

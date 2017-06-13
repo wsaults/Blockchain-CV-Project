@@ -42,9 +42,8 @@ window.App = {
       account = accounts[0];
 
       self.showInfo();
-      self.showTitle();
-      self.showDescription();
-      self.showTipAddress();
+      self.updateGuestBook();
+      self.listenToEvents();
     });
 
     /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
@@ -76,7 +75,6 @@ window.App = {
       document.getElementById("email").innerHTML = email;
     }).catch(function(e) {
       console.log(e);
-      self.setStatus("Error getting author or email; see log.");
     });
   },
 
@@ -91,7 +89,6 @@ window.App = {
       document.getElementById("title").innerHTML = value;
     }).catch(function(e) {
       console.log(e);
-      self.setStatus("Error getting title; see log.");
     });
   },
 
@@ -106,7 +103,6 @@ window.App = {
       document.getElementById("description").innerHTML = value;
     }).catch(function(e) {
       console.log(e);
-      self.setStatus("Error getting title; see log.");
     });
   },
 
@@ -123,7 +119,6 @@ window.App = {
       link.setAttribute("href", value);
     }).catch(function(e) {
       console.log(e);
-      self.setStatus("Error getting website url; see log.");
     });
   },
 
@@ -138,9 +133,54 @@ window.App = {
       document.getElementById("tipAddress").innerHTML = value;
     }).catch(function(e) {
       console.log(e);
-      self.setStatus("Error getting tip address; see log.");
     });
-  }
+  },
+
+  updateGuestBook: function() {
+    var self = this;
+
+    var contract;
+    CurriculumVitae.deployed().then(function(instance) {
+      contract = instance;
+      return contract.guestBookAddreses;
+    }).then(function(values) {
+      var argsString = Array.prototype.join.call(values, "/");
+      console.log(argsString);
+      document.getElementById("addresses").innerHTML = argsString;//values.join("<br />");
+    }).catch(function(e) {
+      console.log(e);
+    });
+  },
+
+  signGuestBook: function() {
+    var self = this;
+
+    var address = document.getElementById("signerAddress").value;
+
+    var contract;
+    CurriculumVitae.deployed().then(function(instance) {
+      contract = instance;
+      console.log(address);
+      return contract.signGuestBook(address);
+    }).then(function() {
+      console.log();
+      // Could refresh here but I'm going to listen for an event instead.
+      self.updateGuestBook();
+    }).catch(function(e) {
+      console.log(e);
+    });
+  },
+
+  listenToEvents: function() {
+    CurriculumVitae.deployed().then(function(instance) {
+      instance.guestBookSigned({}, {}).watch(function(error, event) {
+        console.log(error);
+        console.log(event);
+        console.log("guestBookSigned");
+        document.getElementById("addresses").innerHTML += JSON.stringify(event);
+      });
+    });
+  },
 
 };
 
