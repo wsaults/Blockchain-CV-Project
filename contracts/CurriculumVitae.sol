@@ -17,7 +17,7 @@ contract CurriculumVitae is CVExtender, mortal {
     Identity identity;
 
     function CurriculumVitae() {
-        setIdentity("Will Saults", "Developer", "A guy learning Solidity", "http://example.com", "will@example.com", "0x178Bc6a8ffF5DF6E8B1A358b0BC37647Dc02E57D");
+        setIdentity("Will Saults", "Developer", "A guy learning Solidity", "http://saults.herokuapp.com", "wpsaults@gmail.com", "0x178Bc6a8ffF5DF6E8B1A358b0BC37647Dc02E57D");
     }
 
     function setIdentity(string name, string title, string description, string url, string email, address tipAddress) onlyOwner {

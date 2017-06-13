@@ -59,6 +59,7 @@ window.App = {
     self.showAuthor();
     self.showTitle();
     self.showDescription();
+    self.showWebsite();
     self.showTipAddress();
   },
 
@@ -106,6 +107,23 @@ window.App = {
     }).catch(function(e) {
       console.log(e);
       self.setStatus("Error getting title; see log.");
+    });
+  },
+
+  showWebsite: function() {
+    var self = this;
+
+    var contract;
+    CurriculumVitae.deployed().then(function(instance) {
+      contract = instance;
+      return contract.getAddress.call();
+    }).then(function(value) {
+      document.getElementById("website").innerHTML = value;
+      var link = document.getElementById("websiteAnchor");
+      link.setAttribute("href", value);
+    }).catch(function(e) {
+      console.log(e);
+      self.setStatus("Error getting website url; see log.");
     });
   },
 

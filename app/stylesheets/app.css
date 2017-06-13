@@ -2,8 +2,8 @@ body {
   margin-left: 25%;
   margin-right: 25%;
   margin-top: 10%;
-  padding-top: 5rem;
   font-family: "Open Sans", sans-serif;
+  background-color: #BB7E5D !important;
 }
 
 label {
@@ -50,6 +50,46 @@ h3 {
 
 .hint {
   color: #666;
+}
+
+#author {
+  color: white;
+  float: left;
+}
+
+#title {
+  color: #0892A5;
+  float: right;
+}
+
+.navbar {
+  background-color: black !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+.navbar-header {
+  clear: both;
+}
+
+.jumbotron {
+  background-color: #06908F !important;
+  color: #DBB68F !important;
+}
+
+.input-group {
+  margin-bottom: .5rem;
+}
+
+.well {
+  background-color: #DBB68F !important;
+  border: 0 !important;
+}
+
+#send {
+  color: white;
+  background-color: #0CA4A5;
+  width: 100%;
 }
 
 /* https://stackoverflow.com/questions/40720838/particles-js-as-a-background */
