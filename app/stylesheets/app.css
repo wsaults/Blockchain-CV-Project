@@ -86,6 +86,28 @@ h3 {
   border: 0 !important;
 }
 
+.leftMessageHeader {
+  float: left;
+}
+
+.rightMessageHeader {
+  float: right;
+}
+
+#icon {
+  float: right;
+  width: 64px;
+  height: 64px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  box-shadow: inset rgba(255, 255, 255, 0.6) 0 2px 2px, inset rgba(0,0,0,0.3) 0 -2px 6px;
+}
+
+#lastMessage, #chosenMessage, #messageCount {
+  color: #0892A5;
+}
+
 #send {
   color: white;
   background-color: #0CA4A5;

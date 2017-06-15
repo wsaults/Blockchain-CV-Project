@@ -5,7 +5,7 @@ import "./mortal.sol";
 
 contract CurriculumVitae is CVExtender, mortal {
 
-    event guestBookSigned(address indexed _signer);
+    event messageSet();
     
     struct Identity {
         string _name;
@@ -18,11 +18,13 @@ contract CurriculumVitae is CVExtender, mortal {
 
     Identity identity;
 
-    uint signatureCounter;
-    address[] public guestBookAddreses;
+    uint messageCount;
+    mapping (uint => string) _message;
 
     function CurriculumVitae() {
-        setIdentity("Will Saults", "Developer", "A guy learning Solidity", "http://saults.herokuapp.com", "wpsaults@gmail.com", "0x178Bc6a8ffF5DF6E8B1A358b0BC37647Dc02E57D");
+        setIdentity("Will Saults", "Developer", "A guy learning Solidity", "https://wsaults.github.io/", "wpsaults@gmail.com", "0x178Bc6a8ffF5DF6E8B1A358b0BC37647Dc02E57D");
+        messageCount = 0;
+        _message[messageCount] = "I am the creator!";
     }
 
     function setIdentity(string name, string title, string description, string url, string email, address tipAddress) onlyOwner {
@@ -52,10 +54,17 @@ contract CurriculumVitae is CVExtender, mortal {
         return identity._tipAddress; 
     }
 
-    function signGuestBook(address signerAddress) returns(bool sufficient) {
-        signatureCounter++;
-        guestBookAddreses[signatureCounter] = signerAddress;
-        guestBookSigned(signerAddress);
-        return true;
+    function getMessageCount() constant returns(uint) {
+        return messageCount;
+    }
+
+    function getMessage(uint index) constant returns(string) {
+        return _message[index];
+    }
+
+    function setMessage(string message) {
+        if (bytes(message).length == 0) throw;
+        _message[++messageCount] = message;
+        messageSet();
     }
 }

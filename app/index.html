@@ -18,6 +18,7 @@
   <div class="container">
     <div class="jumbotron">
       <h1>Curriculum Vitae</h1>
+      <div id="icon"></div>
       <p>Final assigment of the Blockchain Developer Udemy course</p>
     </div>
 
@@ -31,7 +32,7 @@
       <div class="col-md-6">
           <div class="list-group">
             <a href="#" id="websiteAnchor" class="list-group-item">
-              <h4 class="list-group-item-heading">Personal website:</h4>
+              <h4 class="list-group-item-heading">Github page:</h4>
               <p class="list-group-item-text" id="website"></p>
             </a>
             <a href="https://github.com/wsaults" class="list-group-item">
@@ -55,15 +56,42 @@
     <hr>
     <div class="row">
       <div class="col-lg-12">
-        <h1>Sign the guest book!</h1>
-        <div class="input-group">
-          <span class="input-group-addon" id="signer">Address</span>
-          <input id="signerAddress" type="text" class="form-control" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae" aria-describedby="basic-addon1"></input>
+        <div>
+          <h2 class="leftMessageHeader">Leave me a message!</h2>
+          <h3 class="rightMessageHeader">Last message: <span id="lastMessage"></span></h3>
         </div>
-        <button type="button" class="btn btn-default navbar-btn" id="send" onclick="App.signGuestBook()">Sign</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="input-group">
+          <span class="input-group-addon">Type something:</span>
+          <input id="messageInput" type="text" class="form-control" placeholder="e.g., Hi there!" aria-describedby="basic-addon1"></input>
+        </div>
+        <button type="button" class="btn btn-default navbar-btn" id="send" onclick="App.saveMessage()">Save</button>
       </div>
       <div class="row">
-        <span id="addresses">addresses</span>
+        <span id="messages"></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div>
+          <h2 class="leftMessageHeader">Message Count: <span id="messageCount"></span></h2>
+          <h3 class="rightMessageHeader">Chosen message: <span id="chosenMessage"></span></h3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="input-group">
+          <span class="input-group-addon">Get a message:</span>
+          <input id="getMessageInput" type="text" class="form-control" placeholder="e.g., 5" aria-describedby="basic-addon1"></input>
+        </div>
+        <button type="button" class="btn btn-default navbar-btn" id="send" onclick="App.getMessageFromInput()">Fetch</button>
+      </div>
+      <div class="row">
+        <span id="messages"></span>
       </div>
     </div>
   </div>

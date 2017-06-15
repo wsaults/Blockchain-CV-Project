@@ -2,6 +2,7 @@
 import "../stylesheets/app.css";
 
 import "bootstrap/dist/css/bootstrap.css";
+import "ethereum-blockies/blockies.min.js"
 
 // Import libraries we need.
 import { default as Web3} from 'web3';
@@ -43,6 +44,7 @@ window.App = {
 
       self.showInfo();
       self.getMessage();
+      self.updateMessageCount();
       self.listenToEvents();
     });
 
@@ -50,6 +52,19 @@ window.App = {
     particlesJS.load('particles-js', '../app/assets/particles.json', function() {
       console.log('callback - particles.js config loaded');
     });
+
+    self.createBlockie();
+  },
+
+  createBlockie: function() { 
+    var icon = document.getElementById('icon');
+    CurriculumVitae.deployed().then(function(instance) {
+      return instance.address;
+    }).then(function(address) {
+      icon.style.backgroundImage = 'url(' + blockies.create({seed: address, size: 15}).toDataURL()+')'
+    }).catch(function(e) {
+      console.log(e);
+    });    
   },
 
   showInfo: function() {
@@ -161,7 +176,7 @@ window.App = {
     CurriculumVitae.deployed().then(function(instance) {
       return instance.getMessageCount.call();;
     }).then(function(count) {
-      document.getElementById("messageCount").innerHTML = count;
+      document.getElementById("messageCount").innerHTML = count.toNumber()+1;
     }).catch(function(e) {
       console.log(e);
     });
