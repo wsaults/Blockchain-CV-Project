@@ -31,4 +31,19 @@ contract('CurriculumVitae', function(accounts) {
             assert.equal(results, "0x00000000000000000000000000000000deadbeef", "The tip address is the same");
         });
     });
+
+    it("message count and messages should match", function() {
+        var contractInstance;
+        return CurriculumVitae.deployed().then(function(instance) {
+            contractInstance = instance;
+            contractInstance.setMessage("I am a great message", {from: accounts[0], gas: 200000});
+            return contractInstance.getMessageCount();
+        }).then(function(count) {
+            assert.equal(count.toNumber(), 1, "The counts are the same");
+        }).then(function() {
+            return contractInstance.getMessage(1);
+        }).then(function(message) {
+            assert.equal(message, "I am a great message", "The messages are the same");
+        });
+    });
 });
