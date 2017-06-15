@@ -22,7 +22,7 @@ contract CurriculumVitae is CVExtender, mortal {
     mapping (uint => string) _message;
 
     function CurriculumVitae() {
-        setIdentity("Will Saults", "Developer", "Just a guy and his Solidity.", "https://wsaults.github.io/", "wpsaults@gmail.com", "0x178Bc6a8ffF5DF6E8B1A358b0BC37647Dc02E57D");
+        setIdentity("Will Saults", "Developer", "Just a guy and his Solidity.", "https://wsaults.github.io/Blockchain-CV-Project/", "wpsaults@gmail.com", "0x178Bc6a8ffF5DF6E8B1A358b0BC37647Dc02E57D");
         _message[messageCount++] = "I am the creator!";
     }
 
