@@ -23,8 +23,7 @@ contract CurriculumVitae is CVExtender, mortal {
 
     function CurriculumVitae() {
         setIdentity("Will Saults", "Developer", "Just a guy and his Solidity.", "https://wsaults.github.io/", "wpsaults@gmail.com", "0x178Bc6a8ffF5DF6E8B1A358b0BC37647Dc02E57D");
-        messageCount = 0;
-        _message[messageCount] = "I am the creator!";
+        _message[messageCount++] = "I am the creator!";
     }
 
     function setIdentity(string name, string title, string description, string url, string email, address tipAddress) onlyOwner {
@@ -64,7 +63,7 @@ contract CurriculumVitae is CVExtender, mortal {
 
     function setMessage(string message) {
         if (bytes(message).length == 0) throw;
-        _message[++messageCount] = message;
+        _message[messageCount++] = message;
         messageSet();
     }
 }

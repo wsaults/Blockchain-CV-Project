@@ -149,7 +149,7 @@ window.App = {
       contract = instance;
       return contract.getMessageCount.call();
     }).then(function(count) {
-      return contract.getMessage.call(count.toNumber());
+      return contract.getMessage.call(count.toNumber()-1);
     }).then(function(message) {
       document.getElementById("lastMessage").innerHTML = message;
     }).catch(function(e) {
@@ -176,7 +176,7 @@ window.App = {
     CurriculumVitae.deployed().then(function(instance) {
       return instance.getMessageCount.call();;
     }).then(function(count) {
-      document.getElementById("messageCount").innerHTML = count.toNumber()+1;
+      document.getElementById("messageCount").innerHTML = count.toNumber();
     }).catch(function(e) {
       console.log(e);
     });
