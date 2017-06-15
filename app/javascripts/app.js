@@ -42,14 +42,14 @@ window.App = {
       account = accounts[0];
 
       self.showInfo();
-      self.updateGuestBook();
+      self.getMessage();
       self.listenToEvents();
     });
 
     /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
-      particlesJS.load('particles-js', '../app/assets/particles.json', function() {
-        console.log('callback - particles.js config loaded');
-      });
+    particlesJS.load('particles-js', '../app/assets/particles.json', function() {
+      console.log('callback - particles.js config loaded');
+    });
   },
 
   showInfo: function() {
@@ -65,10 +65,8 @@ window.App = {
   showAuthor: function() {
     var self = this;
 
-    var contract;
     CurriculumVitae.deployed().then(function(instance) {
-      contract = instance;
-      return contract.getAuthor.call();
+      return instance.getAuthor.call();
     }).then(function(value) {
       let [author, email] = value
       document.getElementById("author").innerHTML = author;
@@ -81,10 +79,8 @@ window.App = {
   showTitle: function() {
     var self = this;
 
-    var contract;
     CurriculumVitae.deployed().then(function(instance) {
-      contract = instance;
-      return contract.getTitle.call();
+      return instance.getTitle.call();
     }).then(function(value) {
       document.getElementById("title").innerHTML = value;
     }).catch(function(e) {
@@ -95,10 +91,8 @@ window.App = {
   showDescription: function() {
     var self = this;
 
-    var contract;
     CurriculumVitae.deployed().then(function(instance) {
-      contract = instance;
-      return contract.getDescription.call();
+      return instance.getDescription.call();
     }).then(function(value) {
       document.getElementById("description").innerHTML = value;
     }).catch(function(e) {
@@ -109,10 +103,8 @@ window.App = {
   showWebsite: function() {
     var self = this;
 
-    var contract;
     CurriculumVitae.deployed().then(function(instance) {
-      contract = instance;
-      return contract.getAddress.call();
+      return instance.getAddress.call();
     }).then(function(value) {
       document.getElementById("website").innerHTML = value;
       var link = document.getElementById("websiteAnchor");
@@ -125,10 +117,8 @@ window.App = {
   showTipAddress: function() {
     var self = this;
 
-    var contract;
     CurriculumVitae.deployed().then(function(instance) {
-      contract = instance;
-      return contract.getTipAddress.call();
+      return instance.getTipAddress.call();
     }).then(function(value) {
       document.getElementById("tipAddress").innerHTML = value;
     }).catch(function(e) {
@@ -136,36 +126,56 @@ window.App = {
     });
   },
 
-  updateGuestBook: function() {
+  getMessage: function() {
     var self = this;
 
     var contract;
     CurriculumVitae.deployed().then(function(instance) {
       contract = instance;
-      return contract.guestBookAddreses;
-    }).then(function(values) {
-      var argsString = Array.prototype.join.call(values, "/");
-      console.log(argsString);
-      document.getElementById("addresses").innerHTML = argsString;//values.join("<br />");
+      return contract.getMessageCount.call();
+    }).then(function(count) {
+      return contract.getMessage.call(count.toNumber());
+    }).then(function(message) {
+      document.getElementById("lastMessage").innerHTML = message;
     }).catch(function(e) {
       console.log(e);
     });
   },
 
-  signGuestBook: function() {
+  getMessageFromInput: function() {
     var self = this;
 
-    var address = document.getElementById("signerAddress").value;
-
-    var contract;
     CurriculumVitae.deployed().then(function(instance) {
-      contract = instance;
-      console.log(address);
-      return contract.signGuestBook(address);
+      var index = document.getElementById("getMessageInput").value;
+      return instance.getMessage.call(index);
+    }).then(function(message) {
+      document.getElementById("chosenMessage").innerHTML = message;
+    }).catch(function(e) {
+      console.log(e);
+    });
+  },
+
+  updateMessageCount: function() {
+    var self = this;
+
+    CurriculumVitae.deployed().then(function(instance) {
+      return instance.getMessageCount.call();;
+    }).then(function(count) {
+      document.getElementById("messageCount").innerHTML = count;
+    }).catch(function(e) {
+      console.log(e);
+    });
+  },
+
+  saveMessage: function() {
+    var self = this;
+
+    var message = document.getElementById("messageInput").value;
+
+    CurriculumVitae.deployed().then(function(instance) {
+      return instance.setMessage(message, {from: account, gas: 200000});
     }).then(function() {
-      console.log();
-      // Could refresh here but I'm going to listen for an event instead.
-      self.updateGuestBook();
+      self.retrieveMessage();
     }).catch(function(e) {
       console.log(e);
     });
@@ -173,11 +183,13 @@ window.App = {
 
   listenToEvents: function() {
     CurriculumVitae.deployed().then(function(instance) {
-      instance.guestBookSigned({}, {}).watch(function(error, event) {
-        console.log(error);
-        console.log(event);
-        console.log("guestBookSigned");
-        document.getElementById("addresses").innerHTML += JSON.stringify(event);
+      instance.messageSet({}, {}).watch(function(error, event) {
+        App.getMessage();
+        App.updateMessageCount();
+        document.getElementById("messageInput").value = "";
+      });
+      instance.messageSet({}, {}).watch(function(error, event) {
+        App.updateMessageCount();
       });
     });
   },
