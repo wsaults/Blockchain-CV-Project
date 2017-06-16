@@ -18,11 +18,13 @@ module.exports = {
         host: '127.0.0.1',
         port: '8545',
         gas: 3000000,
-        from: "0x92440b258C944AB5136C82963E1452793CD90eb0"
+        from: ""
     },
     ropsten: {
-      provider: new HDWalletProvider(process.env.ROPSTEN, "https://ropsten.infura.io/"),
-      network_id: 3
+      // provider: new HDWalletProvider(process.env.ROPSTEN, "https://ropsten.infura.io/"),
+      network_id: 3,
+      gas: 3000000,
+      from: "0x92440b258C944AB5136C82963E1452793CD90eb0"
     },
     rinkeby: {
       provider: new HDWalletProvider(process.env.RINKEBY, "https://www.rinkeby.io/"),
