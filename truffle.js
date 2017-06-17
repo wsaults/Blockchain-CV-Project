@@ -7,12 +7,13 @@ require('babel-register')
 
 module.exports = {
   networks: {
-    // live: {
-    //   network_id: 1, // Ethereum public network
-    //   // provider: new HDWalletProvider(process.env.MAIN, "https://mainnet.infura.io/"),
-    //   gas: 4000000,
-    //   gasPrice: 25000000000
-    // },
+    live: {
+      network_id: 1, // Ethereum public network
+      // provider: new HDWalletProvider(process.env.MAIN, "https://mainnet.infura.io/"),
+      from: "0x05bc223f5fbd2dca548a070c19d6f183671c76a1",
+      gas: 4000000,
+      gasPrice: 25000000000
+    },
     morden: {
       network_id: 2, // Official Ethereum test network
       host: '127.0.0.1',
