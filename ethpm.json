@@ -1,0 +1,12 @@
+{
+  "package_name": "adder",
+  "version": "0.0.1",
+  "description": "CV Contract for the blockchain",
+  "authors": [
+    "Will Saults <wpsaults@gmail.com>"
+  ],
+  "keywords": [
+    "ethereum",
+    "resume"
+  ]
+}
